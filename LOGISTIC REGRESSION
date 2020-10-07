@@ -1,25 +1,28 @@
+
+#Importing the libraries
 import pandas as pd 
 import numpy as np 
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split as tts
+from sklearn.linear_model import LogisticRegression as LLR
+from sklearn.preprocessing import StanderdScaler as SSR
 
-# input 
+#importing the datasets
+dataset=pd.read_csv('User_Data.csv')
 x = dataset.iloc[:, [2, 3]].values 
-
-# output 
 y = dataset.iloc[:, 4].values 
 
-from sklearn.cross_validation import train_test_split 
-xtrain, xtest, ytrain, ytest = train_test_split( 
+#Spliting the dataset into training and test set
+xtrain, xtest, ytrain, ytest = tts( 
 		x, y, test_size = 0.25, random_state = 0) 
-from sklearn.preprocessing import StandardScaler 
-sc_x = StandardScaler() 
+
+sc_x = SSR() 
 xtrain = sc_x.fit_transform(xtrain) 
 xtest = sc_x.transform(xtest) 
 
-print (xtrain[0:10, :]) 
 
-from sklearn.linear_model import LogisticRegression 
-classifier = LogisticRegression(random_state = 0) 
+#Appling LOgisticRegression to training anmd test set
+classifier = LLR(random_state = 0) 
 classifier.fit(xtrain, ytrain) 
 
 
